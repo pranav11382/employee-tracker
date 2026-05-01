@@ -25,12 +25,13 @@ export default async function AdminDashboard() {
     }),
   ]);
 
+  type EntryItem = (typeof todayEntries)[number];
   const avgHours = todayEntries
-    .filter(e => e.clockOut)
-    .reduce((sum, e) => {
+    .filter((e: EntryItem) => e.clockOut)
+    .reduce((sum: number, e: EntryItem) => {
       const ms = new Date(e.clockOut!).getTime() - new Date(e.clockIn).getTime();
       return sum + ms / 3600000;
-    }, 0) / (todayEntries.filter(e => e.clockOut).length || 1);
+    }, 0) / (todayEntries.filter((e: EntryItem) => e.clockOut).length || 1);
 
   return (
     <div className="max-w-6xl mx-auto">
